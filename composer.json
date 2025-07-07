@@ -1,0 +1,35 @@
+{
+    "name": "raxos/container",
+    "description": "A Container for Raxos.",
+    "license": "mit",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "type": "library",
+    "authors": [
+        {
+            "name": "Bas Milius",
+            "email": "bas@mili.us"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Raxos\\Container\\": "src/Raxos/Container"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.4"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../*",
+            "symlink": true
+        }
+    ],
+    "require": {
+        "jetbrains/phpstorm-attributes": "^1.2",
+        "raxos/foundation": "*"
+    }
+}
