@@ -5,11 +5,7 @@ namespace Raxos\Container;
 
 use Closure;
 use Raxos\Foundation\Contract\ReflectorInterface;
-use Raxos\Foundation\Reflection\ClassReflector;
-use Raxos\Foundation\Reflection\FunctionReflector;
-use Raxos\Foundation\Reflection\MethodReflector;
-use Raxos\Foundation\Reflection\ParameterReflector;
-use Raxos\Foundation\Reflection\TypeReflector;
+use Raxos\Foundation\Reflection\{ClassReflector, FunctionReflector, MethodReflector, ParameterReflector, TypeReflector};
 use ReflectionException;
 use function array_key_last;
 use function explode;
