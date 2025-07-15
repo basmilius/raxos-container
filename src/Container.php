@@ -169,14 +169,14 @@ final class Container implements ContainerInterface
                 }
 
                 if ($property->hasAttribute(Proxy::class)) {
-                    $property->set(
+                    $property->setValue(
                         $instance,
                         $property->getType()->class()->reflection->newLazyProxy(
                             static fn() => $this->get($property->getType()->getName(), $inject->tag)
                         )
                     );
                 } else {
-                    $property->set($instance, $this->get($property->getType()->getName(), $inject->tag));
+                    $property->setValue($instance, $this->get($property->getType()->getName(), $inject->tag));
                 }
             }
 
