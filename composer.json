@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Raxos\\Container\\": "src/Raxos/Container"
+            "Raxos\\Container\\": "src/"
         }
     },
     "config": {
