@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace Raxos\Container;
 
 use Closure;
-use Raxos\Container\Error\{CircularDependencyDetectedException, ContainerException, ReflectionFailedException};
-use Raxos\Foundation\Contract\{ArrayableInterface, DebuggableInterface, ReflectorInterface};
+use Raxos\Container\Error\{CircularDependencyDetectedException, ReflectionFailedException};
+use Raxos\Contract\Collection\ArrayableInterface;
+use Raxos\Contract\Container\ContainerExceptionInterface;
+use Raxos\Contract\DebuggableInterface;
+use Raxos\Contract\Reflection\ReflectorInterface;
 use ReflectionException;
 use function array_key_first;
 use function array_key_last;
@@ -43,7 +46,7 @@ final class DependencyChain implements ArrayableInterface, DebuggableInterface
      * @param ReflectorInterface|Closure|string $dep
      *
      * @return void
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */

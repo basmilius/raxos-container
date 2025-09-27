@@ -4,8 +4,12 @@ declare(strict_types=1);
 namespace Raxos\Container;
 
 use Closure;
-use Raxos\Foundation\Contract\ReflectorInterface;
-use Raxos\Foundation\Reflection\{ClassReflector, FunctionReflector, MethodReflector, ParameterReflector, TypeReflector};
+use Raxos\Contract\Reflection\ReflectorInterface;
+use Raxos\Reflection\ClassReflector;
+use Raxos\Reflection\FunctionReflector;
+use Raxos\Reflection\MethodReflector;
+use Raxos\Reflection\ParameterReflector;
+use Raxos\Reflection\TypeReflector;
 use ReflectionException;
 use function array_key_last;
 use function explode;

@@ -6,9 +6,9 @@ namespace Raxos\Container;
 use Closure;
 use Generator;
 use Raxos\Container\Attribute\{Inject, Proxy, Tag};
-use Raxos\Container\Contract\ContainerInterface;
-use Raxos\Container\Error\{AutowireFailedException, ContainerException, DependencyCannotAutowireException, DependencyCannotInstantiateException, ReflectionFailedException, TaggedDependencyNotFoundException};
-use Raxos\Foundation\Reflection\{ClassReflector, FunctionReflector, MethodReflector, ParameterReflector, TypeReflector};
+use Raxos\Container\Error\{AutowireFailedException, DependencyCannotAutowireException, DependencyCannotInstantiateException, ReflectionFailedException, TaggedDependencyNotFoundException};
+use Raxos\Contract\Container\{ContainerExceptionInterface, ContainerInterface};
+use Raxos\Reflection\{ClassReflector, FunctionReflector, MethodReflector, ParameterReflector, TypeReflector};
 use ReflectionException;
 use Throwable;
 use UnitEnum;
@@ -74,7 +74,7 @@ final class Container implements ContainerInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    public function singleton(string $abstract, callable|string|null $concrete, string|UnitEnum|null $tag = null): void
+    public function singleton(string $abstract, callable|string|null $concrete, UnitEnum|string|null $tag = null): void
     {
         $abstract = $this->resolveTaggedIdentifier($abstract, $tag);
 
@@ -86,7 +86,7 @@ final class Container implements ContainerInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    public function singletonIf(string $abstract, callable|string|null $concrete, string|UnitEnum|null $tag = null): void
+    public function singletonIf(string $abstract, callable|string|null $concrete, UnitEnum|string|null $tag = null): void
     {
         if ($this->has($abstract, $tag)) {
             return;
@@ -120,7 +120,7 @@ final class Container implements ContainerInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    public function get(string $abstract, string|UnitEnum|null $tag = null): object
+    public function get(string $abstract, UnitEnum|string|null $tag = null): object
     {
         return $this->resolve($abstract, $tag);
     }
@@ -130,7 +130,7 @@ final class Container implements ContainerInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    public function has(string $abstract, string|UnitEnum|null $tag = null): bool
+    public function has(string $abstract, UnitEnum|string|null $tag = null): bool
     {
         return isset($this->definitions[$abstract])
             || isset($this->singletons[$this->resolveTaggedIdentifier($abstract, $tag)]);
@@ -143,7 +143,7 @@ final class Container implements ContainerInterface
      * @param string $abstract
      *
      * @return object
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
@@ -193,7 +193,7 @@ final class Container implements ContainerInterface
      * @param FunctionReflector|MethodReflector $method
      *
      * @return Generator
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
@@ -219,14 +219,14 @@ final class Container implements ContainerInterface
      *
      * @param DependencyChain|null $chain
      * @param ParameterReflector $parameter
-     * @param string|UnitEnum|null $tag
+     * @param UnitEnum|string|null $tag
      *
      * @return mixed
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    private function autowireDependency(?DependencyChain $chain, ParameterReflector $parameter, string|UnitEnum|null $tag = null): mixed
+    private function autowireDependency(?DependencyChain $chain, ParameterReflector $parameter, UnitEnum|string|null $tag = null): mixed
     {
         try {
             $parameterType = $parameter->getType();
@@ -254,7 +254,7 @@ final class Container implements ContainerInterface
         } catch (ReflectionException $err) {
             throw new ReflectionFailedException($err);
         } catch (Throwable $err) {
-            if ($err instanceof ContainerException) {
+            if ($err instanceof ContainerExceptionInterface) {
                 throw $err;
             }
 
@@ -269,7 +269,7 @@ final class Container implements ContainerInterface
      * @param ParameterReflector $parameter
      *
      * @return mixed
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
@@ -305,15 +305,15 @@ final class Container implements ContainerInterface
      * Autowire an object dependency for a parameter.
      *
      * @param TypeReflector $typeRef
-     * @param string|UnitEnum|null $tag
+     * @param UnitEnum|string|null $tag
      * @param bool $proxy
      *
      * @return object
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    private function autowireObjectDependency(TypeReflector $typeRef, string|UnitEnum|null $tag = null, bool $proxy = false): object
+    private function autowireObjectDependency(TypeReflector $typeRef, UnitEnum|string|null $tag = null, bool $proxy = false): object
     {
         try {
             if ($proxy) {
@@ -333,14 +333,14 @@ final class Container implements ContainerInterface
      * Resolves a dependency.
      *
      * @param string $abstract
-     * @param string|UnitEnum|null $tag
+     * @param UnitEnum|string|null $tag
      *
      * @return object
-     * @throws ContainerException
+     * @throws ContainerExceptionInterface
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    private function resolve(string $abstract, string|UnitEnum|null $tag = null): object
+    private function resolve(string $abstract, UnitEnum|string|null $tag = null): object
     {
         try {
             $chain = $this->createChain();
@@ -387,13 +387,13 @@ final class Container implements ContainerInterface
      * Resolves the tagged identifier for the abstract.
      *
      * @param string $abstract
-     * @param string|UnitEnum|null $tag
+     * @param UnitEnum|string|null $tag
      *
      * @return string
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
-    private function resolveTaggedIdentifier(string $abstract, string|UnitEnum|null $tag = null): string
+    private function resolveTaggedIdentifier(string $abstract, UnitEnum|string|null $tag = null): string
     {
         if ($tag instanceof UnitEnum) {
             $tag = $tag->name;

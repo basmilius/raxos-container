@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Raxos\Container\Error;
 
-use Raxos\Foundation\Error\ExceptionId;
+use Raxos\Contract\Container\ContainerExceptionInterface;
+use Raxos\Error\Exception;
 use Throwable;
 
 /**
@@ -13,7 +14,7 @@ use Throwable;
  * @package Raxos\Container\Error
  * @since 2.0.0
  */
-final class AutowireFailedException extends ContainerException
+final class AutowireFailedException extends Exception implements ContainerExceptionInterface
 {
 
     /**
@@ -29,10 +30,9 @@ final class AutowireFailedException extends ContainerException
     )
     {
         parent::__construct(
-            ExceptionId::guess(),
             'container_autowire_failed',
             'Autowire failed due to an exception.',
-            $this->err
+            previous: $this->err
         );
     }
 

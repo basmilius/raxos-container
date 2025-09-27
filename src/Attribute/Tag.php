@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Raxos\Container\Attribute;
 
 use Attribute;
-use Raxos\Container\Contract\AttributeInterface;
+use Raxos\Contract\Container\AttributeInterface;
 use UnitEnum;
 
 /**
@@ -21,13 +21,13 @@ final readonly class Tag implements AttributeInterface
     /**
      * Tag constructor.
      *
-     * @param string|UnitEnum $name
+     * @param UnitEnum|string $name
      *
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
     public function __construct(
-        public string|UnitEnum $name
+        public UnitEnum|string $name
     ) {}
 
 }

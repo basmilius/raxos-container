@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace Raxos\Container\Error;
 
 use Raxos\Container\{Dependency, DependencyChain};
-use Raxos\Foundation\Error\ExceptionId;
+use Raxos\Contract\Container\ContainerExceptionInterface;
+use Raxos\Error\Exception;
 
 /**
  * Class DependencyCannotAutowireException
@@ -13,7 +14,7 @@ use Raxos\Foundation\Error\ExceptionId;
  * @package Raxos\Container\Error
  * @since 2.0.0
  */
-final class DependencyCannotAutowireException extends ContainerException
+final class DependencyCannotAutowireException extends Exception implements ContainerExceptionInterface
 {
 
     /**
@@ -31,7 +32,6 @@ final class DependencyCannotAutowireException extends ContainerException
     )
     {
         parent::__construct(
-            ExceptionId::guess(),
             'container_dependency_cannot_autowire',
             'Cannot autowire dependency.'
         );

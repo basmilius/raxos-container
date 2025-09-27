@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Raxos\Container\Attribute;
 
 use Attribute;
-use Raxos\Container\Contract\AttributeInterface;
+use Raxos\Contract\Container\AttributeInterface;
 
 /**
  * Class Proxy

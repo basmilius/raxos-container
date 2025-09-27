@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace Raxos\Container\Error;
 
 use Raxos\Container\{Dependency, DependencyChain};
-use Raxos\Foundation\Error\ExceptionId;
+use Raxos\Contract\Container\ContainerExceptionInterface;
+use Raxos\Error\Exception;
 
 /**
  * Class TaggedDependencyNotFoundException
@@ -13,7 +14,7 @@ use Raxos\Foundation\Error\ExceptionId;
  * @package Raxos\Container\Error
  * @since 2.0.0
  */
-final class TaggedDependencyNotFoundException extends ContainerException
+final class TaggedDependencyNotFoundException extends Exception implements ContainerExceptionInterface
 {
 
     /**
@@ -33,9 +34,8 @@ final class TaggedDependencyNotFoundException extends ContainerException
     )
     {
         parent::__construct(
-            ExceptionId::guess(),
             'container_tagged_dependency_not_found',
-            "Dependency with tag {$tag} not found."
+            "Dependency with tag {$this->tag} not found."
         );
     }
 

@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Raxos\Container\Error;
 
-use Raxos\Foundation\Contract\ReflectionFailedExceptionInterface;
-use Raxos\Foundation\Error\ExceptionId;
+use Raxos\Contract\Container\ContainerExceptionInterface;
+use Raxos\Contract\Reflection\ReflectionFailedExceptionInterface;
+use Raxos\Error\Exception;
 use ReflectionException;
 
 /**
@@ -14,7 +15,7 @@ use ReflectionException;
  * @package Raxos\Container\Error
  * @since 2.0.0
  */
-final class ReflectionFailedException extends ContainerException implements ReflectionFailedExceptionInterface
+final class ReflectionFailedException extends Exception implements ContainerExceptionInterface, ReflectionFailedExceptionInterface
 {
 
     /**
@@ -30,10 +31,9 @@ final class ReflectionFailedException extends ContainerException implements Refl
     )
     {
         parent::__construct(
-            ExceptionId::guess(),
             'container_reflection_failed',
             'Reflection failed.',
-            $this->err
+            previous: $this->err
         );
     }
 

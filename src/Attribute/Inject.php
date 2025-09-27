@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Raxos\Container\Attribute;
 
 use Attribute;
-use Raxos\Container\Contract\AttributeInterface;
+use Raxos\Contract\Container\AttributeInterface;
 use UnitEnum;
 
 /**
@@ -21,13 +21,13 @@ final readonly class Inject implements AttributeInterface
     /**
      * Inject constructor.
      *
-     * @param string|UnitEnum|null $tag
+     * @param UnitEnum|string|null $tag
      *
      * @author Bas Milius <bas@mili.us>
      * @since 2.0.0
      */
     public function __construct(
-        public string|UnitEnum|null $tag = null
+        public UnitEnum|string|null $tag = null
     ) {}
 
 }
